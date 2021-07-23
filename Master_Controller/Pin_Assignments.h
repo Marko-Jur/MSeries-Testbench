@@ -11,7 +11,7 @@
 //Pot pins
 #define RED_POT 0
 #define GREEN_POT 1 
-#define BLUE_POT 2
+#define BLUE_POT A2
 
 //Switch pins
 #define RED_SWITCH 3 

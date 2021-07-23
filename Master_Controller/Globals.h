@@ -21,7 +21,7 @@ const int SW_OFF = 0;
 const int SW_ON = 1; /*TODO*/ // Update the parameters
 
 //EMA values:
-const float EMA_ALPHA = 0.6;
+const float EMA_ALPHA = 0.1;
 
 
 #endif

@@ -29,6 +29,7 @@ int blue_sw_raw = 0;
 //Filter variables:
 int EMA_SAMPLE_RED = 0;
 int EMA_SAMPLE_GREEN = 0;
+int EMA_SAMPLE_BLUE = 0;
 
 
 /* Function Name:Input setup
@@ -73,15 +74,14 @@ void inputRead(int input_array[]){
   //Filtering Pot Values - a 100uF capacitor must be added in parallel with the pot
   //Filtering red pot samples
   EMA_SAMPLE_RED = float((EMA_ALPHA*red_pot_raw) +((1-EMA_ALPHA)*EMA_SAMPLE_RED));
-  //Serial.println(EMA_SAMPLE_RED);
 
   //Filtering green pot samples
   EMA_SAMPLE_GREEN = float((EMA_ALPHA*green_pot_raw) +((1-EMA_ALPHA)*EMA_SAMPLE_GREEN));
-  Serial.print(EMA_SAMPLE_GREEN);
-  Serial.print(",");
-  Serial.println(green_pot_raw);
 
-  delay(50);
+  //Filtering blue pot samples
+  EMA_SAMPLE_BLUE = float((EMA_ALPHA*blue_pot_raw) +((1-EMA_ALPHA)*EMA_SAMPLE_BLUE));
+  //Serial.println(EMA_SAMPLE_BLUE);
+  delay(1);
 
   //Reading sw inputs
   red_sw_raw = analogRead(RED_SWITCH);
@@ -94,7 +94,13 @@ void inputRead(int input_array[]){
   input_array[2] = blue_sw_raw;
   
   //Mapping the values and storing them into the array
-  input_array[3] = map(red_pot_raw,POT_MIN_BOUND,POT_MAX_BOUND, LED_MIN_INTENSITY, LED_MAX_INTENSITY);
-  input_array[4] = map(green_pot_raw,POT_MIN_BOUND,POT_MAX_BOUND, LED_MIN_INTENSITY, LED_MAX_INTENSITY);
-  input_array[5] = map(blue_pot_raw,POT_MIN_BOUND,POT_MAX_BOUND, LED_MIN_INTENSITY, LED_MAX_INTENSITY);
+  input_array[3] = map(EMA_SAMPLE_RED,POT_MIN_BOUND,POT_MAX_BOUND, LED_MIN_INTENSITY, LED_MAX_INTENSITY);
+  input_array[4] = map(EMA_SAMPLE_GREEN,POT_MIN_BOUND,POT_MAX_BOUND, LED_MIN_INTENSITY, LED_MAX_INTENSITY);
+  input_array[5] = map(EMA_SAMPLE_BLUE,POT_MIN_BOUND,POT_MAX_BOUND, LED_MIN_INTENSITY, LED_MAX_INTENSITY);
+
+   Serial.print(EMA_SAMPLE_RED);
+   Serial.print(",");
+   Serial.print(EMA_SAMPLE_GREEN);
+   Serial.print(",");
+   Serial.println(EMA_SAMPLE_BLUE);  
 }
